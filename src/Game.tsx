@@ -2,10 +2,12 @@ import React, {useEffect, useState} from 'react';
 import Board from './Board';
 import Popup from './Popup';
 import {View, Pressable, Text, ScrollView, ImageBackground} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
 import stylesheet from './stylesheet';
-import Animated, {
+import {
   SharedValue,
-  useAnimatedStyle,
   useSharedValue,
   withRepeat,
   withSpring,
@@ -24,7 +26,28 @@ interface CalculateWinnerI {
   tie: boolean;
 }
 
-const Game = (): JSX.Element => {
+interface ParamsReceivedI {
+  lastClickedReceived: number | undefined;
+  isDescReceived: boolean;
+}
+
+/*
+1. O isDesc não está a atualizar de uma página para a outra!
+2. Garantir que is isDesc e o lastClicked estão a passar de uma página para a outra.
+3. Depois, fazer um useEffect() que muda sempre que o lastClicked muda e usar a linha
+const historyOrdered = isDesc ? history.slice() : history.slice().reverse();
+Agora o Historic já envia o lastClickedReceived e o isDescReceived. No onEffect() que observa
+o route.params, fazer a atualização do isDesc, do historico (uma cópia). Se ele receber lastClickedReceived=1, então
+tem de ir buscar o index 1 ao histórico e fazer um slice() de tudo até aí.
+
+*/
+
+const Game = ({route, navigation}): JSX.Element => {
+  //----- PARAMETROS RECEBIDOS INICIALMENTE OU OUTRO SCREEN -------
+  const params: ParamsReceivedI = route.params;
+  console.log('-------------------- PARAMS GAME --------------------- ');
+  console.log('params.lastClickedReceived: ', params.lastClickedReceived);
+  console.log('params.isDescReceived: ', params.isDescReceived);
   const [history, sethistory] = useState<historyI[]>([
     {
       squares: Array(9).fill(null),
@@ -32,11 +55,10 @@ const Game = (): JSX.Element => {
       col: null,
     },
   ]);
-
   const [stepNumber, setstepNumber] = useState(0);
   const [xIsNext, setxIsNext] = useState(true);
-  const [lastClicked, setlastclicked] = useState(0);
-  const [isDesc, setisDesc] = useState(true);
+  const [lastClicked, setlastclicked] = useState(params.lastClickedReceived);
+  const [isDesc, setisDesc] = useState(params.isDescReceived);
   const [isModal, setisModal] = useState(false);
   const [statusState, setstatusState] = useState('');
 
@@ -70,9 +92,6 @@ const Game = (): JSX.Element => {
     setlastclicked(step);
   };
 
-  const changeOrder = () => {
-    setisDesc(!isDesc);
-  };
   const goToGameStart = () => {
     setstepNumber(0);
     setxIsNext(true);
@@ -85,40 +104,15 @@ const Game = (): JSX.Element => {
         col: null,
       },
     ]);
-    console.log('GAME START');
   };
 
-  const historyOrdered = isDesc ? history.slice() : history.slice().reverse();
-
-  const moves = historyOrdered.map((step, move) => {
-    const row = historyOrdered[move].row;
-    const col = historyOrdered[move].col;
+  const moves = history.map((step, move) => {
+    const row = history[move].row;
+    const col = history[move].col;
 
     //Se já há histórico (há pelo menos 1 jogada)
     if (!(row == null || col == null)) {
-      const desc =
-        'Go to move #' + move + ' [row: ' + row + ', col: ' + col + ']';
-      console.log('lastClicked: ', lastClicked, ', move: ', move);
-
-      return (
-        <Pressable
-          key={move}
-          style={
-            lastClicked === move
-              ? stylesheet.historicbuttonbold
-              : stylesheet.historicbutton
-          }
-          onPress={() => jumpTo(move)}>
-          <Text
-            style={
-              lastClicked === move
-                ? stylesheet.historictextbold
-                : stylesheet.historictext
-            }>
-            {desc}
-          </Text>
-        </Pressable>
-      );
+      return {move: move, row: row, col: col};
     }
   });
 
@@ -151,9 +145,16 @@ const Game = (): JSX.Element => {
     }
   }, [tie, result, xIsNext]);
 
-  const scale = useSharedValue(1);
-  const scale1 = useSharedValue(1);
+  /* MUDAR O JOGO CONSOANTE O LAST CLICKED!!! */
+  /*---------------------------------------- */
+  React.useEffect(() => {
+    if (route.params?.lastClickedReceived) {
+      setlastclicked(route.params.lastClickedReceived);
+      console.log('USE EFFECT: ', lastClicked);
+    }
+  }, [lastClicked, route.params.lastClickedReceived]);
 
+  const scale = useSharedValue(1);
   const playAnimation = (s: SharedValue<number>): void => {
     s.value = withRepeat(withSpring(0.8), 2, true);
   };
@@ -179,7 +180,6 @@ const Game = (): JSX.Element => {
         ) : (
           <></>
         )}
-
         <View style={stylesheet.bloco1}>
           <Text style={stylesheet.title}>🧚🏼‍♀️ Tic Tac Toe! 🧚🏼‍♀️</Text>
           <ButtonClickAnimation scale={scale}>
@@ -189,7 +189,7 @@ const Game = (): JSX.Element => {
                 playAnimation(scale);
                 goToGameStart();
               }}>
-              <Text style={stylesheet.desctext}>NEW GAME!</Text>
+              <Text style={stylesheet.buttontext}>NEW GAME!</Text>
             </Pressable>
           </ButtonClickAnimation>
           <Text style={stylesheet.status}>{statusState}</Text>
@@ -202,19 +202,15 @@ const Game = (): JSX.Element => {
           />
         </View>
         <View style={stylesheet.bloco3}>
-          <Text style={stylesheet.desctext}>Order your actions</Text>
-          <ButtonClickAnimation scale={scale1}>
-            <Pressable
-              onPress={() => {
-                playAnimation(scale1);
-                changeOrder();
-              }}>
-              <Text style={stylesheet.descbutton}>
-                {isDesc ? 'DESC ⬇️' : 'ASC ⬆️'}
-              </Text>
-            </Pressable>
-          </ButtonClickAnimation>
-          <ScrollView>{moves}</ScrollView>
+          <Pressable
+            style={stylesheet.actionsbutton}
+            onPress={() => {
+              navigation.navigate('Historic', {
+                params: {moves: moves, isDesc: params.isDescReceived},
+              });
+            }}>
+            <Text style={stylesheet.buttontext}>YOUR ACTIONS!</Text>
+          </Pressable>
         </View>
       </ImageBackground>
     </View>

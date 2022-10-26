@@ -32,7 +32,7 @@ const Popup = ({
             onPress={() => {
               openModal(false);
             }}>
-            <Text style={stylesheet.desctext}>Close</Text>
+            <Text style={stylesheet.buttontext}>Close</Text>
           </Pressable>
           <Pressable
             style={stylesheet.modalbutton}
@@ -40,7 +40,7 @@ const Popup = ({
               openModal(false);
               goToGameStart();
             }}>
-            <Text style={stylesheet.desctext}>New Game</Text>
+            <Text style={stylesheet.buttontext}>New Game</Text>
           </Pressable>
         </View>
       </Animated.View>
