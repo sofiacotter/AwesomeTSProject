@@ -21,20 +21,16 @@ interface MovesInterface {
   row: number;
   col: number;
 }
-interface ParamsInterface {
-  moves: MovesInterface[];
-  isDesc: boolean;
-}
+
 export type lastClickedType = undefined | number;
 
 const Historic = ({route, navigation}) => {
-  const {params}: ParamsInterface[] = route.params; //o primeiro é undefined
+  const {params}: MovesInterface[] = route.params; //o primeiro é undefined
   console.log('------------------ PARAMS HISTORIC ------------------- ');
-  console.log('params.isDesc: ', params.isDesc);
   console.log('params.moves: ', params.moves);
 
   //-------- VARIÁVEIS DE ESTADO -------
-  const [isDesc, setisDesc] = useState(params.isDesc);
+  const [isDesc, setisDesc] = useState(true);
   const [lastClicked, setlastclicked] = useState<lastClickedType>(); //se não definir aqui nada, ele outros tipos (e.g. undefined)
   const [movesOrdered, setmovesOrdered] = useState(params.moves);
 
@@ -45,16 +41,20 @@ const Historic = ({route, navigation}) => {
     s.value = withRepeat(withSpring(0.8), 2, true);
   };
 
-  //---------- MUDAR ESTADO ------------
+  //------------- MUDAR ESTADO DE ORDEM --------------
   const changeOrder = () => {
-    setisDesc(!isDesc);
-    const movesOrderedChange = isDesc
+    const b = isDesc ? false : true;
+    //console.log('CHANGE ORDER!');
+    //console.log('b: ', b);
+    setisDesc(b);
+    const movesOrderedChange = b
       ? movesOrdered.slice()
       : movesOrdered.slice().reverse();
     setmovesOrdered(movesOrderedChange);
   };
 
   const jumpTo = (step: lastClickedType) => {
+    console.log('CLIQUEI:, step');
     setlastclicked(step);
   };
 
@@ -87,6 +87,28 @@ const Historic = ({route, navigation}) => {
     }
   });
 
+  const navigateBack = React.useCallback(() => {
+    console.log('LAST CLICKED: ', lastClicked);
+    playAnimation(scale);
+    navigation.navigate({
+      name: 'Game',
+      params: {
+        lastClickedReceived: lastClicked,
+        changeBoard: true,
+      },
+      merge: true,
+    });
+  }, [lastClicked, navigation, scale]);
+
+  /*
+  React.useEffect(() => {
+    const movesOrderedChange = isDesc
+      ? movesOrdered.slice()
+      : movesOrdered.slice().reverse();
+    setmovesOrdered(movesOrderedChange);
+    console.log('MovesOrdered: ', movesOrdered);
+  }, [isDesc]);*/
+
   //Preciso de enviar de volta o "step" que é o "move" (nº do botão)
   //---------- RENDERIZAÇÃO ------------
   const image = {
@@ -94,22 +116,15 @@ const Historic = ({route, navigation}) => {
   };
   return (
     <View style={historicstyle.container}>
-      <View style={historicstyle.bloco1}>
-        <Pressable
-          style={historicstyle.actionsbutton}
-          onPress={() => {
-            playAnimation(scale);
-            navigation.navigate({
-              name: 'Game',
-              params: {
-                lastClickedReceived: lastClicked,
-                isDescReceived: isDesc,
-              },
-              merge: true,
-            });
-          }}>
-          <Text style={stylesheet.buttontext}>APPLY CHANGES</Text>
-        </Pressable>
+      <ImageBackground
+        source={image}
+        style={stylesheet.backgroundImage}
+        resizeMode="cover">
+        <View style={historicstyle.bloco1}>
+          <Pressable style={historicstyle.actionsbutton} onPress={navigateBack}>
+            <Text style={stylesheet.buttontext}>APPLY CHANGES</Text>
+          </Pressable>
+        </View>
         <ButtonClickAnimation scale={scale}>
           <Pressable
             style={historicstyle.actionsbutton}
@@ -122,8 +137,8 @@ const Historic = ({route, navigation}) => {
             </Text>
           </Pressable>
         </ButtonClickAnimation>
-      </View>
-      <View style={historicstyle.bloco2}>{movesToRender}</View>
+        <View style={historicstyle.bloco2}>{movesToRender}</View>
+      </ImageBackground>
     </View>
   );
 };

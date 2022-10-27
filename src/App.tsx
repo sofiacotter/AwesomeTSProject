@@ -17,7 +17,7 @@ const App = () => {
         <Stack.Screen
           name="Game"
           component={Game}
-          initialParams={{lastClickedReceived: undefined, isDescReceived: true}}
+          initialParams={{lastClickedReceived: undefined, changeBoard: false}}
         />
         <Stack.Screen name="Historic" component={Historic} />
       </Stack.Navigator>

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Board from './Board';
 import Popup from './Popup';
 import {View, Pressable, Text, ScrollView, ImageBackground} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useFocusEffect} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import stylesheet from './stylesheet';
@@ -28,26 +28,23 @@ interface CalculateWinnerI {
 
 interface ParamsReceivedI {
   lastClickedReceived: number | undefined;
-  isDescReceived: boolean;
+  changeBoard: boolean;
 }
 
 /*
-1. O isDesc não está a atualizar de uma página para a outra!
-2. Garantir que is isDesc e o lastClicked estão a passar de uma página para a outra.
-3. Depois, fazer um useEffect() que muda sempre que o lastClicked muda e usar a linha
-const historyOrdered = isDesc ? history.slice() : history.slice().reverse();
-Agora o Historic já envia o lastClickedReceived e o isDescReceived. No onEffect() que observa
-o route.params, fazer a atualização do isDesc, do historico (uma cópia). Se ele receber lastClickedReceived=1, então
-tem de ir buscar o index 1 ao histórico e fazer um slice() de tudo até aí.
+1. Verificar porque é que o Botão DESC no Histórico não muda à primeira. Corrigir.
+2. Verificar se tudo corre como suposto.
+3. Melhorar o design (background image)
+*/
 
+/*
+PROBLEMA: Quando o params.lastClickReceived não muda, quando passa do Histórico para o Game,
+o Game também não muda, mesmo que tenham sido feitas novas jogadas por cima do Game antigo.
 */
 
 const Game = ({route, navigation}): JSX.Element => {
   //----- PARAMETROS RECEBIDOS INICIALMENTE OU OUTRO SCREEN -------
   const params: ParamsReceivedI = route.params;
-  console.log('-------------------- PARAMS GAME --------------------- ');
-  console.log('params.lastClickedReceived: ', params.lastClickedReceived);
-  console.log('params.isDescReceived: ', params.isDescReceived);
   const [history, sethistory] = useState<historyI[]>([
     {
       squares: Array(9).fill(null),
@@ -57,10 +54,22 @@ const Game = ({route, navigation}): JSX.Element => {
   ]);
   const [stepNumber, setstepNumber] = useState(0);
   const [xIsNext, setxIsNext] = useState(true);
-  const [lastClicked, setlastclicked] = useState(params.lastClickedReceived);
-  const [isDesc, setisDesc] = useState(params.isDescReceived);
+  const [lastClicked, setlastclicked] =
+    useState<ParamsReceivedI['lastClickedReceived']>(undefined);
   const [isModal, setisModal] = useState(false);
+  const [changeBoard, setchangeBoard] = useState(params.changeBoard);
   const [statusState, setstatusState] = useState('');
+
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('-------------------- PARAMS GAME --------------------- ');
+      console.log('params.lastClickedReceived: ', params.lastClickedReceived);
+      console.log('params.changeBoard: ', params.changeBoard);
+      console.log('changeBoard: ', changeBoard);
+      console.log('history: ', history);
+      console.log('PARAMS: ', JSON.stringify(params));
+    }, []),
+  );
 
   const handleClick = (i: number): void => {
     const history_sliced = history.slice(0, stepNumber + 1);
@@ -86,16 +95,10 @@ const Game = ({route, navigation}): JSX.Element => {
     setxIsNext(!xIsNext);
   };
 
-  const jumpTo = (step: number) => {
-    setstepNumber(step);
-    setxIsNext(step % 2 === 0);
-    setlastclicked(step);
-  };
-
   const goToGameStart = () => {
     setstepNumber(0);
     setxIsNext(true);
-    setlastclicked(0);
+    setlastclicked(undefined);
     //Voltar a colocar um array com apenas 1 entrada inicial, tudo a nulls
     sethistory([
       {
@@ -131,7 +134,6 @@ const Game = ({route, navigation}): JSX.Element => {
     useEffect() 
     */
   useEffect(() => {
-    console.log('USE EFFECT');
     setstatusState('Next player: ' + (xIsNext ? '🦋' : '⭐️'));
     if (tie) {
       setisModal(true);
@@ -145,14 +147,19 @@ const Game = ({route, navigation}): JSX.Element => {
     }
   }, [tie, result, xIsNext]);
 
-  /* MUDAR O JOGO CONSOANTE O LAST CLICKED!!! */
-  /*---------------------------------------- */
-  React.useEffect(() => {
-    if (route.params?.lastClickedReceived) {
-      setlastclicked(route.params.lastClickedReceived);
-      console.log('USE EFFECT: ', lastClicked);
-    }
-  }, [lastClicked, route.params.lastClickedReceived]);
+  /* Não muda quando o route.params.lastClickedReceived é igual ao anterior */
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (route.params.lastClickedReceived) {
+        console.log('USE EFFECT!');
+        const lc = route.params.lastClickedReceived;
+        setxIsNext(lc % 2 === 0);
+        setlastclicked(lc);
+        setstepNumber(lc);
+      }
+    }, [route.params.lastClickedReceived]),
+  );
 
   const scale = useSharedValue(1);
   const playAnimation = (s: SharedValue<number>): void => {
@@ -206,8 +213,9 @@ const Game = ({route, navigation}): JSX.Element => {
             style={stylesheet.actionsbutton}
             onPress={() => {
               navigation.navigate('Historic', {
-                params: {moves: moves, isDesc: params.isDescReceived},
+                params: {moves: moves},
               });
+              setchangeBoard(!changeBoard);
             }}>
             <Text style={stylesheet.buttontext}>YOUR ACTIONS!</Text>
           </Pressable>
