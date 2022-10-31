@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   ImageBackground,
   Pressable,
@@ -32,7 +32,6 @@ const Historic = ({route, navigation}) => {
   //-------- VARIÁVEIS DE ESTADO -------
   const [isDesc, setisDesc] = useState(true);
   const [lastClicked, setlastclicked] = useState<lastClickedType>(); //se não definir aqui nada, ele outros tipos (e.g. undefined)
-  const [movesOrdered, setmovesOrdered] = useState(params.moves);
 
   //------- ANIMAÇÃO DO BOTÃO DESC -----
   const scale = useSharedValue(1);
@@ -44,13 +43,7 @@ const Historic = ({route, navigation}) => {
   //------------- MUDAR ESTADO DE ORDEM --------------
   const changeOrder = () => {
     const b = isDesc ? false : true;
-    //console.log('CHANGE ORDER!');
-    //console.log('b: ', b);
     setisDesc(b);
-    const movesOrderedChange = b
-      ? movesOrdered.slice()
-      : movesOrdered.slice().reverse();
-    setmovesOrdered(movesOrderedChange);
   };
 
   const jumpTo = (step: lastClickedType) => {
@@ -58,7 +51,10 @@ const Historic = ({route, navigation}) => {
     setlastclicked(step);
   };
 
-  const movesToRender = movesOrdered.map((s: MovesInterface) => {
+  const movesOrderedChange = isDesc
+    ? params.moves.slice()
+    : params.moves.slice().reverse();
+  const movesToRender = movesOrderedChange.map((s: MovesInterface) => {
     if (s) {
       const col = s.col;
       const row = s.row;
@@ -100,15 +96,6 @@ const Historic = ({route, navigation}) => {
     });
   }, [lastClicked, navigation, scale]);
 
-  /*
-  React.useEffect(() => {
-    const movesOrderedChange = isDesc
-      ? movesOrdered.slice()
-      : movesOrdered.slice().reverse();
-    setmovesOrdered(movesOrderedChange);
-    console.log('MovesOrdered: ', movesOrdered);
-  }, [isDesc]);*/
-
   //Preciso de enviar de volta o "step" que é o "move" (nº do botão)
   //---------- RENDERIZAÇÃO ------------
   const image = {
@@ -148,6 +135,7 @@ const historicstyle = StyleSheet.create({
     flex: 1,
     backgroundColor: '#e0ffff',
     height: '100%',
+    headerBackVisible: false,
   },
   bloco1: {
     backgroudColor: 'red',

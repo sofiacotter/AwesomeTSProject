@@ -13,7 +13,11 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Game">
+      <Stack.Navigator
+        initialRouteName="Game"
+        screenOptions={{
+          headerBackVisible: false,
+        }}>
         <Stack.Screen
           name="Game"
           component={Game}

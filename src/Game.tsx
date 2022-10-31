@@ -1,7 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import Board from './Board';
 import Popup from './Popup';
-import {View, Pressable, Text, ScrollView, ImageBackground} from 'react-native';
+import {
+  View,
+  Pressable,
+  Text,
+  ScrollView,
+  ImageBackground,
+  InteractionManager,
+} from 'react-native';
 import {NavigationContainer, useFocusEffect} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -147,7 +154,10 @@ const Game = ({route, navigation}): JSX.Element => {
     }
   }, [tie, result, xIsNext]);
 
-  /* Não muda quando o route.params.lastClickedReceived é igual ao anterior */
+  /* useFocusEffect corre quando entro numa componente (esta página Game). 
+  Se a página fosse destruída, o useEffect funcionava, mas
+  como não está a ser destruída, não funciona. 
+  https://reactnavigation.org/docs/use-focus-effect*/
 
   useFocusEffect(
     React.useCallback(() => {
@@ -160,6 +170,15 @@ const Game = ({route, navigation}): JSX.Element => {
       }
     }, [route.params.lastClickedReceived]),
   );
+
+  /* VERIFICAR SE A COMPONENTE FOI MOUNTED (CONSTRUÍDA) OU UNMOUNTED (DESTRUÍDA)
+  Neste caso, nunca está a ser destruída, por isso o useEffect nunca ia funcionar. */
+  React.useEffect(() => {
+    console.log('COMPONENT MOUNTED');
+    return () => {
+      console.log('COMPONENT UNMOUNTED');
+    };
+  }, []);
 
   const scale = useSharedValue(1);
   const playAnimation = (s: SharedValue<number>): void => {
@@ -212,6 +231,7 @@ const Game = ({route, navigation}): JSX.Element => {
           <Pressable
             style={stylesheet.actionsbutton}
             onPress={() => {
+              // playAnimation(n);
               navigation.navigate('Historic', {
                 params: {moves: moves},
               });
