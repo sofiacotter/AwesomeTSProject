@@ -1,4 +1,5 @@
 import React, {useCallback, useState} from 'react';
+import stylesheet_hist from './stylesheet_hist';
 import {
   ImageBackground,
   Pressable,
@@ -66,8 +67,8 @@ const Historic = ({route, navigation}) => {
           key={move}
           style={
             !!lastClicked && lastClicked === move
-              ? historicstyle.historicbuttonbold
-              : historicstyle.historicbutton
+              ? stylesheet_hist.historicbuttonbold
+              : stylesheet_hist.historicbutton
           }
           onPress={() => jumpTo(move)}>
           <Text
@@ -102,19 +103,21 @@ const Historic = ({route, navigation}) => {
     uri: 'https://i.pinimg.com/originals/22/d5/4b/22d54b0a921287519d4e5592245d48b9.jpg',
   };
   return (
-    <View style={historicstyle.container}>
+    <View style={stylesheet_hist.container}>
       <ImageBackground
         source={image}
         style={stylesheet.backgroundImage}
         resizeMode="cover">
-        <View style={historicstyle.bloco1}>
-          <Pressable style={historicstyle.actionsbutton} onPress={navigateBack}>
+        <View style={stylesheet_hist.bloco1}>
+          <Pressable
+            style={stylesheet_hist.actionsbutton}
+            onPress={navigateBack}>
             <Text style={stylesheet.buttontext}>APPLY CHANGES</Text>
           </Pressable>
         </View>
         <ButtonClickAnimation scale={scale}>
           <Pressable
-            style={historicstyle.actionsbutton}
+            style={stylesheet_hist.actionsbutton}
             onPress={() => {
               changeOrder();
               playAnimation(scale);
@@ -124,75 +127,10 @@ const Historic = ({route, navigation}) => {
             </Text>
           </Pressable>
         </ButtonClickAnimation>
-        <View style={historicstyle.bloco2}>{movesToRender}</View>
+        <View style={stylesheet_hist.bloco2}>{movesToRender}</View>
       </ImageBackground>
     </View>
   );
 };
-
-const historicstyle = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#e0ffff',
-    height: '100%',
-    headerBackVisible: false,
-  },
-  bloco1: {
-    backgroudColor: 'red',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    flexDirection: 'column',
-  },
-  bloco2: {
-    flexDirection: 'column',
-    flex: 2,
-    backgroudColor: 'green',
-    alignItems: 'center',
-    textAlign: 'center',
-  },
-  actionsbutton: {
-    padding: '2%',
-    margin: '2%',
-    width: '70%',
-    paddingHorizontal: '10%',
-    borderWidth: 2,
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f5fffa',
-    borderColor: '#b0e0e6',
-    fontFamily: 'Cochin-BoldItalic',
-    fontSize: 18,
-    color: 'black',
-  },
-  historicbutton: {
-    margin: '1%',
-    padding: '2%',
-    width: '70%',
-    marginHorizontal: '5%',
-    borderWidth: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f5fffa',
-    borderColor: '#b0e0e6',
-  },
-  historicbuttonbold: {
-    margin: '1%',
-    padding: '2%',
-    width: '72%',
-    marginHorizontal: '5%',
-    borderWidth: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f5fffa',
-    borderColor: '#008B8B',
-  },
-  backgroundImage: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-});
 
 export default Historic;
