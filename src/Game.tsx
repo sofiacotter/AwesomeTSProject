@@ -188,8 +188,7 @@ const Game = ({route, navigation}): JSX.Element => {
   const image = {
     uri: 'https://i.pinimg.com/originals/22/d5/4b/22d54b0a921287519d4e5592245d48b9.jpg',
   };
-  //const image={uri: "https://cdn.wallpapersafari.com/84/72/kicb3R.jpg"};
-  //const image = { uri: "https://img.freepik.com/free-vector/blue-powder-pastel-with-hand-drawn-flowers-background_52683-41004.jpg?w=2000&t=st=1666021980~exp=1666022580~hmac=2965ba60331e7931805125f05bc0de93870c43d060e292982fec39436ae3aeb6" };
+
   //control+command+space --> para emojis
   return (
     <View style={stylesheet.container}>

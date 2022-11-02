@@ -5,25 +5,24 @@ import Game from './Game';
 import Historic from './Historic';
 
 /*
-<Stack.Screen name="Home">
-          {(props) => <HomeScreen {props} extraData={someData} />}
-        </Stack.Screen>
-        */
+SOBRE BACK BUTTONS
+https://stackoverflow.com/questions/71155215/remove-back-button-from-header-in-react-native-and-react-navigation
+*/
 const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Game"
-        screenOptions={{
-          headerBackVisible: false,
-        }}>
+      <Stack.Navigator initialRouteName="Game">
         <Stack.Screen
           name="Game"
           component={Game}
           initialParams={{lastClickedReceived: undefined, changeBoard: false}}
         />
-        <Stack.Screen name="Historic" component={Historic} />
+        <Stack.Screen
+          name="Historic"
+          component={Historic}
+          options={{headerBackVisible: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

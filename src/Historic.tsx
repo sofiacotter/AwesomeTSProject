@@ -30,11 +30,11 @@ const Historic = ({route, navigation}) => {
   console.log('------------------ PARAMS HISTORIC ------------------- ');
   console.log('params.moves: ', params.moves);
 
-  //-------- VARIÁVEIS DE ESTADO -------
+  //----------------- VARIÁVEIS DE ESTADO -------------
   const [isDesc, setisDesc] = useState(true);
   const [lastClicked, setlastclicked] = useState<lastClickedType>(); //se não definir aqui nada, ele outros tipos (e.g. undefined)
 
-  //------- ANIMAÇÃO DO BOTÃO DESC -----
+  //--------------- ANIMAÇÃO DO BOTÃO DESC -----------
   const scale = useSharedValue(1);
 
   const playAnimation = (s: SharedValue<number>): void => {
@@ -97,7 +97,6 @@ const Historic = ({route, navigation}) => {
     });
   }, [lastClicked, navigation, scale]);
 
-  //Preciso de enviar de volta o "step" que é o "move" (nº do botão)
   //---------- RENDERIZAÇÃO ------------
   const image = {
     uri: 'https://i.pinimg.com/originals/22/d5/4b/22d54b0a921287519d4e5592245d48b9.jpg',
