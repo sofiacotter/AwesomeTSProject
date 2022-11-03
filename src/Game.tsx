@@ -1,16 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Board from './Board';
 import Popup from './Popup';
-import {
-  View,
-  Pressable,
-  Text,
-  ScrollView,
-  ImageBackground,
-  InteractionManager,
-} from 'react-native';
-import {NavigationContainer, useFocusEffect} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {View, Pressable, Text, ImageBackground} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 
 import stylesheet from './stylesheet';
 import {

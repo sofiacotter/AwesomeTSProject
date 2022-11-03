@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react';
-import {Pressable, Text} from 'react-native';
-import Animated, {
+import React from 'react';
+import {Pressable} from 'react-native';
+import {
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
   withSpring,
-  withTiming,
 } from 'react-native-reanimated';
+import Animated from 'react-native-reanimated';
 import styles from './stylesheet';
 
 /* Function components: Componentes que apenas contém método render()

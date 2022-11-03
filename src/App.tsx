@@ -1,8 +1,8 @@
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import Game from './Game';
 import Historic from './Historic';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 /*
 SOBRE BACK BUTTONS
