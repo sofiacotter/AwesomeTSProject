@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Board Properties Square Test 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#f5fffa",
+      "borderColor": "#b0e0e6",
+      "borderWidth": 3,
+      "flex": 1,
+      "fontWeight": "bold",
+      "justifyContent": "center",
+      "margin": 2,
+      "padding": "5%",
+      "textAlign": "center",
+    }
+  }
+  testID="squarePressId"
+>
+  <Text
+    style={
+      Object {
+        "transform": Array [
+          Object {
+            "scale": 2,
+          },
+        ],
+      }
+    }
+    testID="textId"
+  >
+    X
+  </Text>
+</View>
+`;

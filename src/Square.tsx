@@ -52,8 +52,11 @@ const Square = ({isWin, value, onClick}: SquareProps): JSX.Element => {
   if (isWin) {
     return (
       //botão verde
-      <Pressable style={styles.winsquare} onPress={combPress}>
-        <Animated.Text style={(styles.text, animatedStyles)}>
+      <Pressable
+        style={styles.winsquare}
+        onPress={combPress}
+        testID="squarePressId">
+        <Animated.Text style={(styles.text, animatedStyles)} testID="textId">
           {value}
         </Animated.Text>
       </Pressable>
@@ -61,8 +64,8 @@ const Square = ({isWin, value, onClick}: SquareProps): JSX.Element => {
   }
   return (
     //botão vermelho
-    <Pressable style={styles.square} onPress={combPress}>
-      <Animated.Text style={(styles.text, animatedStyles)}>
+    <Pressable style={styles.square} onPress={combPress} testID="squarePressId">
+      <Animated.Text style={(styles.text, animatedStyles)} testID="textId">
         {value}
       </Animated.Text>
     </Pressable>
