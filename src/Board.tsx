@@ -23,17 +23,17 @@ const Board = ({squares, lines, onClick}: BoardProps): JSX.Element => {
       />
     );
   };
-
+  //Tentar fazer esta função usar os for loops
   const createSquares = () => {
     let rows: JSX.Element[] = [];
     for (var i = 0; i < 3; i++) {
-      let squares_array: JSX.Element[] = [];
+      let squaresArray: JSX.Element[] = [];
       for (var j = 0; j < 3; j++) {
-        squares_array.push(renderSquare(3 * i + j));
+        squaresArray.push(renderSquare(3 * i + j));
       }
       rows.push(
         <View style={stylesheet.linha} key={i}>
-          {squares_array}
+          {squaresArray}
         </View>,
       );
     }
