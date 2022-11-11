@@ -6,7 +6,7 @@ import Animated, {
   withRepeat,
   withSpring,
 } from 'react-native-reanimated';
-import styles from './stylesheet';
+import stylesheet from '../styles/stylesheet';
 
 /* Function components: Componentes que apenas contém método render()
 e não mantêm estado próprio. Em vez de serem definidos como uma classe
@@ -46,10 +46,10 @@ const Square = ({isWin, value, onClick}: SquareProps): JSX.Element => {
 
   return (
     <Pressable
-      style={isWin ? styles.winsquare : styles.square}
+      style={isWin ? stylesheet.winsquare : stylesheet.square}
       onPress={combPress}
       testID="squarePressId">
-      <Animated.Text style={(styles.text, animatedStyles)} testID="textId">
+      <Animated.Text style={(stylesheet.text, animatedStyles)} testID="textId">
         {value}
       </Animated.Text>
     </Pressable>

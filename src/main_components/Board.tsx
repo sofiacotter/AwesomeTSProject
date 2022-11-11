@@ -1,7 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import Square from './Square';
-import stylesheet from './stylesheet';
+import stylesheet from '../styles/stylesheet';
 
 interface BoardProps {
   squares: (null | string)[];
@@ -26,9 +26,9 @@ const Board = ({squares, lines, onClick}: BoardProps): JSX.Element => {
   //Tentar fazer esta função usar os for loops
   const createSquares = () => {
     let rows: JSX.Element[] = [];
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       let squaresArray: JSX.Element[] = [];
-      for (var j = 0; j < 3; j++) {
+      for (let j = 0; j < 3; j++) {
         squaresArray.push(renderSquare(3 * i + j));
       }
       rows.push(

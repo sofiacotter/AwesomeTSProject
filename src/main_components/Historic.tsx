@@ -1,21 +1,14 @@
-import React, {useCallback, useState} from 'react';
-import stylesheet_hist from './stylesheet_hist';
-import {
-  ImageBackground,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React, {useState} from 'react';
+import stylesheet_hist from '../styles/stylesheet_hist';
+import {ImageBackground, Pressable, Text, View} from 'react-native';
 import {
   SharedValue,
   useSharedValue,
   withRepeat,
   withSpring,
 } from 'react-native-reanimated';
-import ButtonClickAnimation from './ButtonClickAnimation';
-import stylesheet from './stylesheet';
+import ButtonClickAnimation from '../aux_components/ButtonClickAnimation';
+import stylesheet from '../styles/stylesheet';
 
 interface MovesInterface {
   move: number;

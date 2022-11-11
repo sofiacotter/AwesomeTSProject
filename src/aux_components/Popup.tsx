@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Pressable, Text, Modal} from 'react-native';
 import Animated, {BounceInDown, BounceOutDown} from 'react-native-reanimated';
-import stylesheet from './stylesheet';
+import stylesheet from '../styles/stylesheet';
 
 interface PopupProps {
   statusState: string;

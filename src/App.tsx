@@ -1,7 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import Game from './Game';
-import Historic from './Historic';
+import Game from './main_components/Game';
+import Historic from './main_components/Historic';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 /*

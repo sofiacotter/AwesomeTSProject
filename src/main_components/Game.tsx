@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import Board from './Board';
-import Popup from './Popup';
+import Popup from '../aux_components/Popup';
 import {View, Pressable, Text, ImageBackground} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 
-import stylesheet from './stylesheet';
+import stylesheet from '../styles/stylesheet';
 import {
   SharedValue,
   useSharedValue,
   withRepeat,
   withSpring,
 } from 'react-native-reanimated';
-import ButtonClickAnimation from './ButtonClickAnimation';
+import ButtonClickAnimation from '../aux_components/ButtonClickAnimation';
 
 interface historyI {
   squares: (null | string)[];
