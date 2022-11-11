@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
@@ -122,24 +122,7 @@
 <a name='L57'></a><a href='#L57'>57</a>
 <a name='L58'></a><a href='#L58'>58</a>
 <a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a>
-<a name='L73'></a><a href='#L73'>73</a>
-<a name='L74'></a><a href='#L74'>74</a>
-<a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L60'></a><a href='#L60'>60</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -169,9 +152,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -187,22 +168,9 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -215,13 +183,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
 import {Pressable} from 'react-native';
-import {
+import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
   withSpring,
 } from 'react-native-reanimated';
-import Animated from 'react-native-reanimated';
 import styles from './stylesheet';
 &nbsp;
 /* Function components: Componentes que apenas contém método render()
@@ -244,9 +211,7 @@ interface SquareProps {
 }
 &nbsp;
 const Square = ({isWin, value, onClick}: SquareProps): JSX.Element =&gt; {
-  //const progress = useSharedValue(1);
   const scale = useSharedValue(2);
-&nbsp;
   const animatedStyles = useAnimatedStyle(() =&gt; {
     return {
       //opacity: progress.value,
@@ -262,24 +227,11 @@ const Square = ({isWin, value, onClick}: SquareProps): JSX.Element =&gt; {
     onClick();
   };
 &nbsp;
-  //useEffect(() =&gt; {}, []);
-&nbsp;
-  if (isWin) {
-    return (
-      //botão verde
-      &lt;Pressable
-        style={styles.winsquare}
-        onPress={combPress}
-        testID="squarePressId"&gt;
-        &lt;Animated.Text style={(styles.text, animatedStyles)} testID="textId"&gt;
-          {value}
-        &lt;/Animated.Text&gt;
-      &lt;/Pressable&gt;
-    );
-  }
   return (
-    //botão vermelho
-    &lt;Pressable style={styles.square} onPress={combPress} testID="squarePressId"&gt;
+    &lt;Pressable
+      style={isWin ? styles.winsquare : styles.square}
+      onPress={combPress}
+      testID="squarePressId"&gt;
       &lt;Animated.Text style={(styles.text, animatedStyles)} testID="textId"&gt;
         {value}
       &lt;/Animated.Text&gt;
@@ -295,7 +247,7 @@ export default Square;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-11T13:05:51.078Z
+                at 2022-11-11T13:10:07.712Z
             </div>
         <script src="prettify.js"></script>
         <script>

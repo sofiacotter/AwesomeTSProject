@@ -1,10 +1,4 @@
-import Animated, {
-  SharedValue,
-  useAnimatedStyle,
-  useSharedValue,
-  withRepeat,
-  withSpring,
-} from 'react-native-reanimated';
+import Animated, {SharedValue, useAnimatedStyle} from 'react-native-reanimated';
 
 type ButtonClickAnimationProps = React.PropsWithChildren<{
   scale: SharedValue<number>;
@@ -18,7 +12,6 @@ const ButtonClickAnimation = ({
 }: ButtonClickAnimationProps): JSX.Element => {
   const animatedButton = useAnimatedStyle(() => {
     return {
-      //opacity: progress.value,
       transform: [{scale: scale.value}],
     };
   }, []);
