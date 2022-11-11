@@ -22,9 +22,6 @@ describe('Testing Square properties', () => {
 
   //TESTING SQUARE BUTTON
   test('Square should have particular values', () => {
-    type SquareType = {
-      t: 'X' | 'O' | null;
-    };
     render(
       <Square
         isWin={true}
