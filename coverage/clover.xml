@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1668169963742" clover="3.2.0">
-  <project timestamp="1668169963742" name="All files">
+<coverage generated="1668171951084" clover="3.2.0">
+  <project timestamp="1668171951084" name="All files">
     <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4" elements="19" coveredelements="19" complexity="0" loc="13" ncloc="13" packages="1" files="2" classes="2"/>
     <file name="Square.tsx" path="/Users/sofiacotter/Desktop/Apps/AwesomeTSProject/src/Square.tsx">
       <metrics statements="12" coveredstatements="12" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
