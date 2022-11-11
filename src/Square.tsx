@@ -1,12 +1,11 @@
 import React from 'react';
 import {Pressable} from 'react-native';
-import {
+import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
   withSpring,
 } from 'react-native-reanimated';
-import Animated from 'react-native-reanimated';
 import styles from './stylesheet';
 
 /* Function components: Componentes que apenas contém método render()
@@ -29,9 +28,7 @@ interface SquareProps {
 }
 
 const Square = ({isWin, value, onClick}: SquareProps): JSX.Element => {
-  //const progress = useSharedValue(1);
   const scale = useSharedValue(2);
-
   const animatedStyles = useAnimatedStyle(() => {
     return {
       //opacity: progress.value,
@@ -47,24 +44,11 @@ const Square = ({isWin, value, onClick}: SquareProps): JSX.Element => {
     onClick();
   };
 
-  //useEffect(() => {}, []);
-
-  if (isWin) {
-    return (
-      //botão verde
-      <Pressable
-        style={styles.winsquare}
-        onPress={combPress}
-        testID="squarePressId">
-        <Animated.Text style={(styles.text, animatedStyles)} testID="textId">
-          {value}
-        </Animated.Text>
-      </Pressable>
-    );
-  }
   return (
-    //botão vermelho
-    <Pressable style={styles.square} onPress={combPress} testID="squarePressId">
+    <Pressable
+      style={isWin ? styles.winsquare : styles.square}
+      onPress={combPress}
+      testID="squarePressId">
       <Animated.Text style={(styles.text, animatedStyles)} testID="textId">
         {value}
       </Animated.Text>
