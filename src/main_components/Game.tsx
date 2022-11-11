@@ -30,17 +30,6 @@ interface ParamsReceivedI {
   changeBoard: boolean;
 }
 
-/*
-1. Verificar porque é que o Botão DESC no Histórico não muda à primeira. Corrigir.
-2. Verificar se tudo corre como suposto.
-3. Melhorar o design (background image)
-*/
-
-/*
-PROBLEMA: Quando o params.lastClickReceived não muda, quando passa do Histórico para o Game,
-o Game também não muda, mesmo que tenham sido feitas novas jogadas por cima do Game antigo.
-*/
-
 const Game = ({route, navigation}): JSX.Element => {
   //----- PARAMETROS RECEBIDOS INICIALMENTE OU OUTRO SCREEN -------
   const params: ParamsReceivedI = route.params;
