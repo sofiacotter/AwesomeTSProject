@@ -1,11 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import Square from '../src/Square';
-import {fireEvent, render, screen, within} from '@testing-library/react-native';
+import {fireEvent, render, screen} from '@testing-library/react-native';
 
 describe('Testing Square properties', () => {
-  //TESTAR A RENDERIZAÇÃO DO QUADRADO
-  /*
+  //TESTING SQUARE RENDERING
   test('Square Test', () => {
     const tree = renderer
       .create(
@@ -20,9 +19,8 @@ describe('Testing Square properties', () => {
       .toJSON();
     expect(tree).toMatchSnapshot();
   });
-  */
 
-  //TESTAR DE O BOTÃO SÓ TEM OS VALORES NULL, 'X' OU 'O'
+  //TESTING SQUARE BUTTON
   test('Square should have particular values', () => {
     type SquareType = {
       t: 'X' | 'O' | null;
@@ -39,11 +37,14 @@ describe('Testing Square properties', () => {
     const squarePressable = screen.queryByTestId('squarePressId');
     const textId = screen.queryByTestId('textId');
     expect(squarePressable).toBeDefined();
+    expect(squarePressable).toBeTruthy();
+    expect(squarePressable).not.toBeFalsy();
     expect(textId).toBeDefined();
     expect(screen.getByText('X')).toBeTruthy();
+    expect(screen.getByText('X')).not.toBeFalsy();
   });
 
-  //TESTAR AS CORES A MUDAREM NO QUADRADO (isWin=true)
+  //TESTING THE CHANGE OF COLOR ON A WINNING SQUARE
   test('Square changes to color green', () => {
     render(
       <Square
@@ -57,5 +58,13 @@ describe('Testing Square properties', () => {
     expect(screen.queryByTestId('squarePressId')).toHaveStyle(
       "borderColor: '#f5fffa'",
     );
+  });
+  //TESTING SQUARE CLICKS
+  test('Fill square with X', () => {
+    const onClickHandle = jest.fn();
+    render(<Square isWin={false} value={null} onClick={onClickHandle} />);
+    fireEvent.press(screen.queryByTestId('squarePressId'));
+    expect(onClickHandle).toHaveBeenCalledTimes(1);
+    expect(onClickHandle).toHaveBeenCalled();
   });
 });
