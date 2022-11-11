@@ -29,7 +29,7 @@ interface ParamsReceivedI {
   lastClickedReceived: number | undefined;
   changeBoard: boolean;
 }
-
+/*todos os bugs fixed!*/
 const Game = ({route, navigation}): JSX.Element => {
   //----- PARAMETROS RECEBIDOS INICIALMENTE OU OUTRO SCREEN -------
   const params: ParamsReceivedI = route.params;
