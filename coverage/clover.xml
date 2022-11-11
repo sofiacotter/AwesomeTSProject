@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1668172207717" clover="3.2.0">
-  <project timestamp="1668172207717" name="All files">
-    <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4" elements="17" coveredelements="17" complexity="0" loc="11" ncloc="11" packages="1" files="2" classes="2"/>
-    <file name="Square.tsx" path="/Users/sofiacotter/Desktop/Apps/AwesomeTSProject/src/Square.tsx">
+<coverage generated="1668173123977" clover="3.2.0">
+  <project timestamp="1668173123978" name="All files">
+    <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4" elements="17" coveredelements="17" complexity="0" loc="11" ncloc="11" packages="2" files="2" classes="2"/>
+    <package name="main_components">
       <metrics statements="10" coveredstatements="10" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
-      <line num="30" count="2" type="stmt"/>
-      <line num="31" count="14" type="stmt"/>
-      <line num="32" count="14" type="stmt"/>
-      <line num="33" count="14" type="stmt"/>
-      <line num="39" count="14" type="stmt"/>
-      <line num="40" count="1" type="stmt"/>
-      <line num="42" count="14" type="stmt"/>
-      <line num="43" count="1" type="stmt"/>
-      <line num="44" count="1" type="stmt"/>
-      <line num="47" count="14" type="stmt"/>
-    </file>
-    <file name="stylesheet.tsx" path="/Users/sofiacotter/Desktop/Apps/AwesomeTSProject/src/stylesheet.tsx">
+      <file name="Square.tsx" path="/Users/sofiacotter/Desktop/Apps/AwesomeTSProject/src/main_components/Square.tsx">
+        <metrics statements="10" coveredstatements="10" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="31" count="14" type="stmt"/>
+        <line num="32" count="14" type="stmt"/>
+        <line num="33" count="14" type="stmt"/>
+        <line num="39" count="14" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="42" count="14" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="47" count="14" type="stmt"/>
+      </file>
+    </package>
+    <package name="styles">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <line num="3" count="2" type="stmt"/>
-    </file>
+      <file name="stylesheet.tsx" path="/Users/sofiacotter/Desktop/Apps/AwesomeTSProject/src/styles/stylesheet.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="2" type="stmt"/>
+      </file>
+    </package>
   </project>
 </coverage>

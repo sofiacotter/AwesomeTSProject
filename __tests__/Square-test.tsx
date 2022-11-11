@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Square from '../src/Square';
+import Square from '../src/main_components/Square';
 import {fireEvent, render, screen} from '@testing-library/react-native';
 
 describe('Testing Square properties', () => {

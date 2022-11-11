@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Square from '../src/Square';
+import Square from '../src/main_components/Square';
 import {render, screen} from '@testing-library/react-native';
 import {Text, View} from 'react-native';
 

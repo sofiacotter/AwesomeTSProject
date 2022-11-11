@@ -1,5 +1,5 @@
 TN:
-SF:src/Square.tsx
+SF:src/main_components/Square.tsx
 FN:30,(anonymous_0)
 FN:32,(anonymous_1)
 FN:39,(anonymous_2)
@@ -28,7 +28,7 @@ BRF:2
 BRH:2
 end_of_record
 TN:
-SF:src/stylesheet.tsx
+SF:src/styles/stylesheet.tsx
 FNF:0
 FNH:0
 DA:3,2
